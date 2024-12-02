@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from accounts.models import Chef
+from kitchen.forms import ChefCreationForm, ChefExperienceUpdateForm, DishForm
 from kitchen.models import Dish, DishType
 
 
@@ -26,7 +27,7 @@ def index(request):
         "num_visits": num_visits + 1,
     }
 
-    return render(request, "taxi/index.html", context=context)
+    return render(request, "kitchen/index.html", context=context)
 
 
 class DishTypeListView(LoginRequiredMixin, generic.ListView):
@@ -99,7 +100,7 @@ class ChefCreateView(LoginRequiredMixin, generic.CreateView):
 
 class ChefDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Chef
-    template_name = "taxi/driver_confirm_delete.html"
+    template_name = "taxi/chef_confirm_delete.html"
     success_url = reverse_lazy("kitchen:chef-list")
 
 
