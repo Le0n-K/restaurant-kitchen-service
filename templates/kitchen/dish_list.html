@@ -8,16 +8,67 @@
     </a>
   </h1>
   
+  <form method="get" action="" class="form-inline">
+    {{ search_form.as_p }}
+    <input type="submit" class="btn" style="border: 1px solid gray;" value="🔍">
+  </form>
+  
   {% if dish_list %}
-    <ul>
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+{#        <th>Description</th>#}
+        <th>Price</th>
+        <th>Dish Type</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+
       {% for dish in dish_list %}
-        <li>
-          <a href="{% url 'kitchen:dish-detail' pk=dish.id %} ">{{ dish.id }}</a>
-          {{ dish.name }} ({{ dish.dish_type.name }})
-        </li>
+        <tr>
+          <td>
+              {{ dish.id }}
+          </td>
+          <td>
+              {{ dish.name }}
+          </td>
+{#          <td>#}
+{#              {{ dish.description }}#}
+{#          </td>#}
+          <td>
+              {{ dish.price }}
+          </td>
+          <td>
+              {{ dish.dish_type }}
+          </td>
+          <td>
+              <a href="{% url 'kitchen:dish-update' pk=dish.id %}">
+                Update
+              </a>
+            </td>
+            <td>
+              <a style="color: red"
+                href="{% url 'kitchen:dish-delete' pk=dish.id %}">
+                Delete
+              </a>
+            </td>
+        </tr>
       {% endfor %}
-    </ul>
+    </table>
+    
   {% else %}
     <p>There are no dishes in the kitchen</p>
   {% endif %}
 {% endblock %}
+
+
+{#{% if dish_list %}#}
+{#    <ul>#}
+{#      {% for dish in dish_list %}#}
+{#        <li>#}
+{#          <a href="{% url 'kitchen:dish-detail' pk=dish.id %} ">{{ dish.id }}</a>#}
+{#          {{ dish.name }} ({{ dish.dish_type.name }})#}
+{#        </li>#}
+{#      {% endfor %}#}
+{#    </ul>#}

@@ -6,6 +6,11 @@
         Create
       </a>
     </h1>
+  
+    <form method="get" action="" class="form-inline">
+    {{ search_form.as_p }}
+    <input type="submit" class="btn" style="border: 1px solid gray;" value="🔍">
+    </form>
 
     {% if chef_list %}
     <table class="table">
@@ -15,6 +20,7 @@
         <th>First name</th>
         <th>Last name</th>
         <th>Years Of Experience</th>
+        <th>Update</th>
         <th>Delete</th>
       </tr>
     {% for chef in chef_list %}
@@ -24,6 +30,11 @@
         <td>{{ chef.first_name }}</td>
         <td>{{ chef.last_name }}</td>
         <td>{{ chef.years_of_experience }}</td>
+        <td>
+          <a href="{% url 'kitchen:chef-update' pk=chef.id %}">
+            Update
+          </a>
+        </td>
         <td>
           <a style="color: red"
             href="{% url 'kitchen:chef-delete' pk=chef.id %}">

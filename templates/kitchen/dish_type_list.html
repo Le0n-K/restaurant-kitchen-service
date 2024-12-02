@@ -7,6 +7,11 @@
       Create
     </a>
   </h1>
+  
+  <form method="get" action="" class="form-inline">
+    {{ search_form.as_p }}
+    <input type="submit" class="btn" style="border: 1px solid gray;" value="🔍">
+  </form>
 
   {% if dish_type_list %}
     <table class="table">
@@ -20,19 +25,19 @@
       {% for type in dish_type_list %}
         <tr>
           <td>
-              {{ dish_type_list.id }}
+              {{ type.id }}
           </td>
           <td>
-              {{ dish_type_list.name }}
+              {{ type.name }}
           </td>
           <td>
-              <a href="{% url 'kitchen:dish_type-update' pk=dish_type.id %}">
+              <a href="{% url 'kitchen:dish_type-update' pk=type.id %}">
                 Update
               </a>
             </td>
             <td>
               <a style="color: red"
-                href="{% url 'kitchen:dish_type-delete' pk=dish_type.id %}">
+                href="{% url 'kitchen:dish_type-delete' pk=type.id %}">
                 Delete
               </a>
             </td>

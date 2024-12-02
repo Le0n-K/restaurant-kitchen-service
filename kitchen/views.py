@@ -5,7 +5,8 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from accounts.models import Chef
-from kitchen.forms import ChefCreationForm, ChefExperienceUpdateForm, DishForm
+from kitchen.forms import ChefCreationForm, ChefExperienceUpdateForm, DishForm, ChefSearchForm, DishSearchForm, \
+    DishTypeSearchForm
 from kitchen.models import Dish, DishType
 
 
@@ -36,6 +37,23 @@ class DishTypeListView(LoginRequiredMixin, generic.ListView):
     template_name = "kitchen/dish_type_list.html"
     paginate_by = 5
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(DishTypeListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = DishTypeSearchForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = DishType.objects.all()
+        form = DishTypeSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return queryset
+
 
 class DishTypeCreateView(LoginRequiredMixin, generic.CreateView):
     model = DishType
@@ -59,6 +77,23 @@ class DishListView(LoginRequiredMixin, generic.ListView):
     model = Dish
     paginate_by = 5
     queryset = Dish.objects.all().select_related("dish_type")
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(DishListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = DishSearchForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Dish.objects.all()
+        form = DishSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return queryset
 
 
 class DishDetailView(LoginRequiredMixin, generic.DetailView):
@@ -87,10 +122,28 @@ class ChefListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
     template_name = "kitchen/chef_list.html"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ChefListView, self).get_context_data(**kwargs)
+        username = self.request.GET.get("username", "")
+        context["search_form"] = ChefSearchForm(
+            initial={"username": username}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Chef.objects.all()
+        form = ChefSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(
+                username__icontains=form.cleaned_data["username"]
+            )
+        return queryset
+
 
 class ChefDetailView(LoginRequiredMixin, generic.DetailView):
     model = Chef
-    queryset = Chef.objects.all().prefetch_related("dishes__dish_type")
+    template_name = "kitchen/chef_detail.html"
+    queryset = Chef.objects.all().prefetch_related("chefs__dish_type")
 
 
 class ChefCreateView(LoginRequiredMixin, generic.CreateView):
@@ -108,6 +161,7 @@ class ChefDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class ChefUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Chef
+    template_name = "kitchen/chef_form.html"
     success_url = reverse_lazy("kitchen:chef-list")
     form_class = ChefExperienceUpdateForm
 
