@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -111,21 +111,21 @@ class ChefUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = ChefExperienceUpdateForm
 
 
-# @login_required
-# def assign_me_car(request, pk):
-#     if request.method == "POST":
-#         driver = Driver.objects.get(id=request.user.id)
-#         car = Car.objects.get(id=pk)
-#         car.drivers.add(driver)
-#
-#     return redirect("taxi:car-detail", pk=pk)
-#
-#
-# @login_required
-# def delete_me_car(request, pk):
-#     if request.method == "POST":
-#         driver = Driver.objects.get(id=request.user.id)
-#         car = Car.objects.get(id=pk)
-#         car.drivers.remove(driver)
-#
-#     return redirect("taxi:car-detail", pk=pk)
+@login_required
+def assign_me_dish(request, pk):
+    if request.method == "POST":
+        chef = Chef.objects.get(id=request.user.id)
+        dish = Dish.objects.get(id=pk)
+        dish.chefs.add(chef)
+
+    return redirect("kitchen:dish-detail", pk=pk)
+
+
+@login_required
+def delete_me_dish(request, pk):
+    if request.method == "POST":
+        chef = Chef.objects.get(id=request.user.id)
+        dish = Dish.objects.get(id=pk)
+        dish.chefs.remove(chef)
+
+    return redirect("kitchen:dish-detail", pk=pk)

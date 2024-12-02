@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    {{ dish.name }}
+    <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <p>Dish Type: ({{ dish.dish_type.name }})</p>
+  <h1>Chefs</h1>
+  <hr>
+  <ul>
+    {% for chef in dish.chefs.all %}
+      <li>{{ chef.username }} ({{ chef.first_name }} {{ chef.last_name }})</li>
+    {% endfor %}
+  </ul>
+  {% if user in dish.chefs.all %}
+  <form action="{% url 'ki' pk=car.id %}" method="post" class="link-to-page">
+  {% csrf_token %}
+    <input class="btn btn-danger" type="submit" value="Delete me from this car">
+  </form>
+  {% else %}
+  <form action="{% url 'taxi:assign-me-car' pk=car.id %}" method="post" class="link-to-page">
+  {% csrf_token %}
+    <input class="btn btn-success" type="submit" value="Assign me to this car">
+  </form>
+  {% endif %}
+{% endblock %}
