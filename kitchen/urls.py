@@ -15,9 +15,8 @@ from kitchen.views import (
     ChefCreateView,
     ChefDeleteView,
     ChefUpdateView,
-    index,
+    index, assign_me_dish, delete_me_dish,
 )
-
 
 urlpatterns = [
     path("", index, name="index"),
@@ -91,8 +90,16 @@ urlpatterns = [
         ChefUpdateView.as_view(),
         name="chef-update"
     ),
-    # path("assign-me-car/<int:pk>/", assign_me_car, name="assign-me-car"),
-    # path("delete-me-car/<int:pk>/", delete_me_car, name="delete-me-car")
+    path(
+        "assign-me-dish/<int:pk>/",
+        assign_me_dish,
+        name="assign-me-dish"
+    ),
+    path(
+        "delete-me-dish/<int:pk>/",
+        delete_me_dish,
+        name="delete-me-dish"
+    )
 ]
 
 app_name = "kitchen"

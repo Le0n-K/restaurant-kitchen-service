@@ -20,14 +20,14 @@
     {% endfor %}
   </ul>
   {% if user in dish.chefs.all %}
-  <form action="{% url 'ki' pk=car.id %}" method="post" class="link-to-page">
+  <form action="{% url 'kitchen:delete-me-dish' pk=dish.id %}" method="post" class="link-to-page">
   {% csrf_token %}
-    <input class="btn btn-danger" type="submit" value="Delete me from this car">
+    <input class="btn btn-danger" type="submit" value="Delete me from this dish">
   </form>
   {% else %}
-  <form action="{% url 'taxi:assign-me-car' pk=car.id %}" method="post" class="link-to-page">
+  <form action="{% url 'kitchen:assign-me-dish' pk=dish.id %}" method="post" class="link-to-page">
   {% csrf_token %}
-    <input class="btn btn-success" type="submit" value="Assign me to this car">
+    <input class="btn btn-success" type="submit" value="Assign me to this dish">
   </form>
   {% endif %}
 {% endblock %}
