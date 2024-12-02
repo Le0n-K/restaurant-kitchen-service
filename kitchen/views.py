@@ -9,7 +9,7 @@ from kitchen.forms import ChefCreationForm, ChefExperienceUpdateForm, DishForm
 from kitchen.models import Dish, DishType
 
 
-@login_required
+# @login_required
 def index(request):
     """View function for the home page of the site."""
 
