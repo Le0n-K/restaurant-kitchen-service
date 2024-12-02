@@ -106,7 +106,7 @@ class ChefDeleteView(LoginRequiredMixin, generic.DeleteView):
 class ChefUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Chef
     success_url = reverse_lazy("kitchen:chef-list")
-    form_class = ChefExperianceUpdateForm
+    form_class = ChefExperienceUpdateForm
 
 
 # @login_required
