@@ -100,7 +100,7 @@ class ChefCreateView(LoginRequiredMixin, generic.CreateView):
 
 class ChefDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Chef
-    template_name = "taxi/chef_confirm_delete.html"
+    template_name = "kitchen/chef_confirm_delete.html"
     success_url = reverse_lazy("kitchen:chef-list")
 
 
