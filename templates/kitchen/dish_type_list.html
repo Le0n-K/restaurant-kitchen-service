@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Dish Type List
+    <a href="{% url 'kitchen:dish_type-create' %}" class="btn btn-primary link-to-page">
+      Create
+    </a>
+  </h1>
+
+  {% if dish_type_list %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+
+      {% for type in dish_type_list %}
+        <tr>
+          <td>
+              {{ dish_type_list.id }}
+          </td>
+          <td>
+              {{ dish_type_list.name }}
+          </td>
+          <td>
+              <a href="{% url 'kitchen:dish_type-update' pk=dish_type.id %}">
+                Update
+              </a>
+            </td>
+            <td>
+              <a style="color: red"
+                href="{% url 'kitchen:dish_type-delete' pk=dish_type.id %}">
+                Delete
+              </a>
+            </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+  {% else %}
+      <p>There are no types of dish in the service.</p>
+  {% endif %}
+{% endblock %}

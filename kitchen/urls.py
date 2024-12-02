@@ -15,7 +15,7 @@ from kitchen.views import (
     ChefCreateView,
     ChefDeleteView,
     ChefUpdateView,
-    inde,
+    index,
 )
 
 

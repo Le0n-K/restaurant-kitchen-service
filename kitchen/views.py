@@ -57,7 +57,7 @@ class DishTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
 class DishListView(LoginRequiredMixin, generic.ListView):
     model = Dish
     paginate_by = 5
-    queryset = Dish.objects.all().select_related("dish")
+    queryset = Dish.objects.all().select_related("dish_type")
 
 
 class DishDetailView(LoginRequiredMixin, generic.DetailView):
@@ -84,16 +84,17 @@ class DishDeleteView(LoginRequiredMixin, generic.DeleteView):
 class ChefListView(LoginRequiredMixin, generic.ListView):
     model = Chef
     paginate_by = 5
+    template_name = "kitchen/chef_list.html"
 
 
 class ChefDetailView(LoginRequiredMixin, generic.DetailView):
     model = Chef
-    queryset = Chef.objects.all().prefetch_related("chefs__dish_type")
+    queryset = Chef.objects.all().prefetch_related("dishes__dish_type")
 
 
 class ChefCreateView(LoginRequiredMixin, generic.CreateView):
     model = Chef
-    template_name = "kitchen/chef_list.html"
+    template_name = "kitchen/chef_form.html"
     success_url = reverse_lazy("kitchen:chef-list")
     form_class = ChefCreationForm
 

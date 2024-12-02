@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Chef List
+      <a href="{% url 'kitchen:chef-create' %}" class="btn btn-primary link-to-page">
+        Create
+      </a>
+    </h1>
+
+    {% if chef_list %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Years Of Experience</th>
+        <th>Delete</th>
+      </tr>
+    {% for chef in chef_list %}
+      <tr>
+        <td>{{ chef.id }}</td>
+        <td><a href="{{ chef.get_absolute_url }}">{{ chef.username }} {% if user == chef %} (Me){% endif %}</a></td>
+        <td>{{ chef.first_name }}</td>
+        <td>{{ chef.last_name }}</td>
+        <td>{{ chef.years_of_experience }}</td>
+        <td>
+          <a style="color: red"
+            href="{% url 'kitchen:chef-delete' pk=chef.id %}">
+            Delete
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+
+    </table>
+    {% else %}
+      <p>There are no chefs in the kitchen.</p>
+    {% endif %}
+{% endblock %}
