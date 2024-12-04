@@ -1,21 +1,32 @@
 <ul class="sidebar-nav">
-  {% if user.is_authenticate %}
+  {% if user.is_authenticated %}
+    <li class="list-group-item">User: <a href="{{ user.get_absolute_url }}">{{ user.get_username }}</a></li>
     <li class="list-group-item">
-      <a href="{% url 'kitchen:chef-detail' user.pk %}">
-        User: {{ user.username }}
-      </a>
-    </li>
-    <li class="list-group-item">
-      <form action="{% url 'accounts:logout' %}" method="post">
+      <form method="post" action="{% url 'accounts:logout' %}" style="display: inline;">
         {% csrf_token %}
-        <button type="submit">Logout</button>
+        <button type="submit" class="btn btn-link">Logout</button>
       </form>
     </li>
   {% else %}
-    <li class="list-group-item">
-      <a href="{% url 'accounts:login' %}">Login</a>
-    </li>
+    <li class="list-group-item"><a href="{% url 'accounts:login'%}?next={{request.path}}">Login</a></li>
   {% endif %}
+{#  {% if user.is_authenticate %}#}
+{#    <li class="list-group-item">#}
+{#      <a href="{% url 'kitchen:chef-detail' user.pk %}">#}
+{#        User: {{ user.username }}#}
+{#      </a>#}
+{#    </li>#}
+{#    <li class="list-group-item">#}
+{#      <form action="{% url 'accounts:logout' %}" method="post">#}
+{#        {% csrf_token %}#}
+{#        <button type="submit">Logout</button>#}
+{#      </form>#}
+{#    </li>#}
+{#  {% else %}#}
+{#    <li class="list-group-item">#}
+{#      <a href="{% url 'accounts:login' %}">Login</a>#}
+{#    </li>#}
+{#  {% endif %}#}
   <br>
   <li class="list-group-item">
     <a href="{% url "kitchen:index" %}">Home page</a>

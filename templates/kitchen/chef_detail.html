@@ -20,7 +20,7 @@
   <div class="ml-3">
     <h4>Dishes</h4>
 
-    {% for dish in chef.dish.all %}
+    {% for dish in chef.dishes.all %}
         <hr>
         <p><strong>Name:</strong> {{ dish.name }}</p>
         <p><strong>Dish Type:</strong> {{ dish.dish_type.name }}</p>

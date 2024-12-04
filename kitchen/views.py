@@ -143,7 +143,7 @@ class ChefListView(LoginRequiredMixin, generic.ListView):
 class ChefDetailView(LoginRequiredMixin, generic.DetailView):
     model = Chef
     template_name = "kitchen/chef_detail.html"
-    queryset = Chef.objects.all().prefetch_related("chefs__dish_type")
+    queryset = Chef.objects.all().prefetch_related("dishes__dish_type")
 
 
 class ChefCreateView(LoginRequiredMixin, generic.CreateView):
