@@ -6,7 +6,7 @@
         Create
       </a>
     </h1>
-  
+
     <form method="get" action="" class="form-inline">
     {{ search_form.as_p }}
     <input type="submit" class="btn" style="border: 1px solid gray;" value="🔍">
@@ -26,7 +26,11 @@
     {% for chef in chef_list %}
       <tr>
         <td>{{ chef.id }}</td>
-        <td><a href="{{ chef.get_absolute_url }}">{{ chef.username }} {% if user == chef %} (Me){% endif %}</a></td>
+        <td>
+          <a href="{{ chef.get_absolute_url }}">{{ chef.username }} 
+          {% if user == chef %} (Me){% endif %}
+          </a>
+        </td>
         <td>{{ chef.first_name }}</td>
         <td>{{ chef.last_name }}</td>
         <td>{{ chef.years_of_experience }}</td>
@@ -49,3 +53,77 @@
       <p>There are no chefs in the kitchen.</p>
     {% endif %}
 {% endblock %}
+
+
+
+
+
+
+
+
+{#{% extends "base.html" %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container">#}
+{#    <div class="row mb-4">#}
+{#        <div class="col-md-8">#}
+{#            <h1 class="display-4">Chef List</h1>#}
+{#        </div>#}
+{#        <div class="col-md-4 text-end">#}
+{#            <a href="{% url 'kitchen:chef-create' %}" class="btn btn-primary">#}
+{#                <i class="fas fa-plus"></i> Add New Chef#}
+{#            </a>#}
+{#        </div>#}
+{#    </div>#}
+{#    #}
+{#    <div class="row mb-4">#}
+{#        <div class="col-md-12">#}
+{#            <form method="get" action="" class="d-flex">#}
+{#                {{ search_form.as_p }}#}
+{#                <button type="submit" class="btn btn-outline-secondary ms-2">#}
+{#                    <i class="fas fa-search"></i>#}
+{#                </button>#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#    {% if chef_list %}#}
+{#        <div class="table-responsive">#}
+{#            <table class="table table-striped table-hover">#}
+{#                <thead>#}
+{#                    <tr>#}
+{#                        <th>ID</th>#}
+{#                        <th>Username</th>#}
+{#                        <th>Name</th>#}
+{#                        <th>Years of Experience</th>#}
+{#                        <th>Actions</th>#}
+{#                    </tr>#}
+{#                </thead>#}
+{#                <tbody>#}
+{#                    {% for chef in chef_list %}#}
+{#                        <tr>#}
+{#                            <td>{{ chef.id }}</td>#}
+{#                            <td>#}
+{#                                <a href="{{ chef.get_absolute_url }}">{{ chef.username }}</a>#}
+{#                                {% if user == chef %} <span class="badge bg-primary">Me</span>{% endif %}#}
+{#                            </td>#}
+{#                            <td>{{ chef.first_name }} {{ chef.last_name }}</td>#}
+{#                            <td>{{ chef.years_of_experience }}</td>#}
+{#                            <td>#}
+{#                                <a href="{% url 'kitchen:chef-update' pk=chef.id %}" class="btn btn-sm btn-outline-primary">#}
+{#                                    <i class="fas fa-edit"></i>#}
+{#                                </a>#}
+{#                                <a href="{% url 'kitchen:chef-delete' pk=chef.id %}" class="btn btn-sm btn-outline-danger">#}
+{#                                    <i class="fas fa-trash"></i>#}
+{#                                </a>#}
+{#                            </td>#}
+{#                        </tr>#}
+{#                    {% endfor %}#}
+{#                </tbody>#}
+{#            </table>#}
+{#        </div>#}
+{#    {% else %}#}
+{#        <p class="lead text-center">There are no chefs in the kitchen.</p>#}
+{#    {% endif %}#}
+{#</div>#}
+{#{% endblock %}#}

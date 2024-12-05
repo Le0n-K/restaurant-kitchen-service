@@ -1,0 +1,38 @@
+<!-- Core JS Files -->
+<script src="{% static 'js/core/jquery.min.js' %}"></script>
+<script src="{% static 'js/core/popper.min.js' %}"></script>
+<script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+
+<!-- Chart JS -->
+<script src="{% static 'js/plugins/chartjs.min.js' %}"></script>
+
+<!-- Control Center for Black Dashboard -->
+<script src="{% static 'js/black-dashboard.min.js' %}"></script>
+
+<!-- Kitchen Service Custom Scripts -->
+<script src="{% static 'js/kitchen-dashboard.js' %}"></script>
+
+{% block extra_js %}{% endblock extra_js %}
+
+<script>
+    $(document).ready(function() {
+        // Initialize the dashboard
+        $().ready(function() {
+            $sidebar = $('.sidebar');
+            $navbar = $('.navbar');
+            $main_panel = $('.main-panel');
+
+            // Initialize perfect scrollbar for sidebar
+            if ($sidebar.length != 0) {
+                $sidebar.perfectScrollbar();
+                $('html').addClass('perfect-scrollbar-on');
+            } else {
+                $('html').addClass('perfect-scrollbar-off');
+            }
+
+            // Initialize tooltips
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    });
+</script>
