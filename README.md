@@ -2,6 +2,11 @@
 
 The best service system for the restaurant kitchen
 
+## Access to site
+
+login: admin
+password: a1d2m3i4n5
+
 
 ## Check it Out!
 
