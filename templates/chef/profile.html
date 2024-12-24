@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Edit Profile</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="username" class="form-label">Username</label>
+                                {{ form.username }}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email address</label>
+                                {{ form.email }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="first_name" class="form-label">First Name</label>
+                                {{ form.first_name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="last_name" class="form-label">Last Name</label>
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            {{ form.address }}
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="city" class="form-label">City</label>
+                                {{ form.city }}
+                            </div>
+                            <div class="col-md-4">
+                                <label for="country" class="form-label">Country</label>
+                                {{ form.country }}
+                            </div>
+                            <div class="col-md-4">
+                                <label for="postal_code" class="form-label">Postal Code</label>
+                                {{ form.postal_code }}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="about_me" class="form-label">About Me</label>
+                            <textarea class="form-control" id="about_me" name="about_me" rows="4">{{ form.about_me.value|default:'' }}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <img src="{% static 'img/default-avatar.png' %}" alt="Profile Photo" class="rounded-circle img-fluid mb-3" style="width: 150px;">
+                    <h5 class="card-title">{{ user.get_full_name }}</h5>
+                    <p class="card-text">{{ user.role|default:'Chef' }}</p>
+                    <p class="card-text">{{ user.about_me|default:'No description available.' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,107 @@
+from django.urls import path
+
+from kitchen.views import (
+    DishListView,
+    DishDetailView,
+    DishCreateView,
+    DishUpdateView,
+    DishDeleteView,
+    DishTypeListView,
+    DishTypeCreateView,
+    DishTypeUpdateView,
+    DishTypeDeleteView,
+    ChefListView,
+    ChefDetailView,
+    ChefCreateView,
+    ChefDeleteView,
+    ChefUpdateView,
+    IndexView,
+    AssignMeDishView,
+    DeleteMeDishView
+)
+
+urlpatterns = [
+    path("", IndexView.as_view(), name="index"),
+    path(
+        "dishes/",
+        DishListView.as_view(),
+        name="dish-list",
+    ),
+    path(
+        "dishes/<int:pk>/",
+        DishDetailView.as_view(),
+        name="dish-detail"
+    ),
+    path(
+        "dishes/create/",
+        DishCreateView.as_view(),
+        name="dish-create",
+    ),
+    path(
+        "dishes/<int:pk>/update/",
+        DishUpdateView.as_view(),
+        name="dish-update",
+    ),
+    path(
+        "dishes/<int:pk>/delete/",
+        DishDeleteView.as_view(),
+        name="dish-delete",
+    ),
+    path(
+        "dish_types/",
+        DishTypeListView.as_view(),
+        name="dish-type-list"
+    ),
+    path(
+        "dish_types/create/",
+        DishTypeCreateView.as_view(),
+        name="dish-type-create"
+    ),
+    path(
+        "dish_types/<int:pk>/update/",
+        DishTypeUpdateView.as_view(),
+        name="dish-type-update"
+    ),
+    path(
+        "dish_types/<int:pk>/delete/",
+        DishTypeDeleteView.as_view(),
+        name="dish-type-delete"
+    ),
+    path(
+        "chefs/",
+        ChefListView.as_view(),
+        name="chef-list"
+    ),
+    path(
+        "chefs/<int:pk>/",
+        ChefDetailView.as_view(),
+        name="chef-detail"
+    ),
+    path(
+        "chefs/create/",
+        ChefCreateView.as_view(),
+        name="chef-create"
+    ),
+    path(
+        "chefs/<int:pk>/delete/",
+        ChefDeleteView.as_view(),
+        name="chef-delete"
+    ),
+    path(
+        "chefs/<int:pk>/update/",
+        ChefUpdateView.as_view(),
+        name="chef-update"
+    ),
+    path(
+        "dish/<int:pk>/assign/",
+        AssignMeDishView.as_view(),
+        name="assign-me-dish"
+    ),
+    path(
+        "dish/<int:pk>/delete/",
+        DeleteMeDishView.as_view(),
+        name="delete-me-dish"
+    )
+]
+
+app_name = "kitchen"

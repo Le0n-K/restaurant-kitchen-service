@@ -1,0 +1,26 @@
+<div class="sidebar-header">
+    <h3>Kitchen Dashboard</h3>
+</div>
+
+<ul class="list-unstyled components">
+    <li class="{% if 'index' in segment %}active{% endif %}">
+        <a href="{% url 'kitchen:index' %}">
+            <i class="fas fa-chart-pie"></i> Dashboard
+        </a>
+    </li>
+    <li class="{% if 'dish-type' in segment %}active{% endif %}">
+        <a href="{% url 'kitchen:dish-type-list' %}">
+            <i class="fas fa-tags"></i> Dish Types
+        </a>
+    </li>
+    <li class="{% if 'dish' in segment and 'type' not in segment %}active{% endif %}">
+        <a href="{% url 'kitchen:dish-list' %}">
+            <i class="fas fa-hamburger"></i> Dishes
+        </a>
+    </li>
+    <li class="{% if 'chef' in segment %}active{% endif %}">
+        <a href="{% url 'kitchen:chef-list' %}">
+            <i class="fas fa-user-chef"></i> Chefs
+        </a>
+    </li>
+</ul>

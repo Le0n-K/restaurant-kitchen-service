@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h3 mb-0">Chefs</h1>
+                <a href="{% url 'kitchen:chef-create' %}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Add New Chef
+                </a>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <form method="get" action="" class="d-flex gap-2">
+                        {{ search_form.as_p }}
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            {% if chef_list %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Name</th>
+                                <th>Years of Experience</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for chef in chef_list %}
+                                <tr>
+                                    <td>{{ chef.id }}</td>
+                                    <td>
+                                        <a href="{{ chef.get_absolute_url }}">{{ chef.username }}</a>
+                                        {% if user == chef %} <span class="badge bg-primary">Me</span>{% endif %}
+                                    </td>
+                                    <td>{{ chef.first_name }} {{ chef.last_name }}</td>
+                                    <td>{{ chef.years_of_experience }}</td>
+                                    <td class="text-end">
+                                        <div class="btn-group">
+                                            <a href="{% url 'kitchen:chef-update' pk=chef.id %}" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="{% url 'kitchen:chef-delete' pk=chef.id %}" class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-user-chef fa-3x text-muted mb-3"></i>
+                    <p class="lead mb-0">No chefs available.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

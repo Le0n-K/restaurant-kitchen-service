@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h3 mb-0">Dish Types</h1>
+                <a href="{% url 'kitchen:dish-type-create' %}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Add New Type
+                </a>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <form method="get" action="" class="d-flex gap-2">
+                        {{ search_form.as_p }}
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            {% if dish_type_list %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Dishes Count</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dish_type in dish_type_list %}
+                                <tr>
+                                    <td>{{ dish_type.id }}</td>
+                                    <td>{{ dish_type.name }}</td>
+                                    <td>{{ dish_type.dishes.count }}</td>
+                                    <td class="text-end">
+                                        <div class="btn-group">
+                                            <a href="{% url 'kitchen:dish-type-update' pk=dish_type.id %}" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="{% url 'kitchen:dish-type-delete' pk=dish_type.id %}" class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-utensils fa-3x text-muted mb-3"></i>
+                    <p class="lead mb-0">No dish types available.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

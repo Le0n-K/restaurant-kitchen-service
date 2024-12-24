@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Your Messages</h2>
+  
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Send Message</button>
+  </form>
+
+  <ul>
+    {% for message in messages %}
+      <li>
+        {{ message.content }}
+        <small>({{ message.created_at }})</small>
+        <a href="{% url "messanger:delete_message" message.id %}">Delete</a>
+      </li>
+    {% empty %}
+      <li>No messages yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
