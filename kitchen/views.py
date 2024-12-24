@@ -1,34 +1,29 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.views import generic
+from django.shortcuts import redirect, get_object_or_404
+from django.urls import reverse_lazy, reverse
+from django.views import generic, View
+from django.views.generic import TemplateView
 
 from accounts.models import Chef
-from kitchen.forms import ChefCreationForm, ChefExperienceUpdateForm, DishForm, ChefSearchForm, DishSearchForm, \
-    DishTypeSearchForm
+from accounts.forms import ChefCreationForm, ChefSearchForm, ChefExperienceUpdateForm
+from kitchen.forms import DishForm, DishSearchForm, DishTypeSearchForm
 from kitchen.models import Dish, DishType
 
 
-# @login_required
-def index(request):
-    """View function for the home page of the site."""
+class IndexView(TemplateView):
+    template_name = "kitchen/index.html"
 
-    num_chefs = Chef.objects.count()
-    num_dishes = Dish.objects.count()
-    num_dish_types = DishType.objects.count()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["num_chefs"] = Chef.objects.count()
+        context["num_dishes"] = Dish.objects.count()
+        context["num_dish_types"] = DishType.objects.count()
 
-    num_visits = request.session.get("num_visits", 0)
-    request.session["num_visits"] = num_visits + 1
+        num_visits = self.request.session.get("num_visits", 0)
+        self.request.session["num_visits"] = num_visits + 1
+        context["num_visits"] = num_visits + 1
 
-    context = {
-        "num_chefs": num_chefs,
-        "num_dishes": num_dishes,
-        "num_dish_types": num_dish_types,
-        "num_visits": num_visits + 1,
-    }
-
-    return render(request, "kitchen/index.html", context=context)
+        return context
 
 
 class DishTypeListView(LoginRequiredMixin, generic.ListView):
@@ -59,24 +54,24 @@ class DishTypeCreateView(LoginRequiredMixin, generic.CreateView):
     model = DishType
     fields = "__all__"
     template_name = "kitchen/dish_type_form.html"
-    success_url = reverse_lazy("kitchen:dish_type-list")
+    success_url = reverse_lazy("kitchen:dish-type-list")
 
 
 class DishTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = DishType
     fields = "__all__"
-    success_url = reverse_lazy("kitchen:dish_type-list")
+    success_url = reverse_lazy("kitchen:dish-type-list")
 
 
 class DishTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = DishType
-    success_url = reverse_lazy("kitchen:dish_type-list")
+    success_url = reverse_lazy("kitchen:dish-type-list")
 
 
 class DishListView(LoginRequiredMixin, generic.ListView):
     model = Dish
     paginate_by = 5
-    queryset = Dish.objects.all().select_related("dish_type")
+    queryset = Dish.objects.select_related("dish_type")
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DishListView, self).get_context_data(**kwargs)
@@ -143,7 +138,7 @@ class ChefListView(LoginRequiredMixin, generic.ListView):
 class ChefDetailView(LoginRequiredMixin, generic.DetailView):
     model = Chef
     template_name = "kitchen/chef_detail.html"
-    queryset = Chef.objects.all().prefetch_related("dishes__dish_type")
+    queryset = Chef.objects.prefetch_related("dishes__dish_type")
 
 
 class ChefCreateView(LoginRequiredMixin, generic.CreateView):
@@ -166,21 +161,17 @@ class ChefUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = ChefExperienceUpdateForm
 
 
-@login_required
-def assign_me_dish(request, pk):
-    if request.method == "POST":
-        chef = Chef.objects.get(id=request.user.id)
-        dish = Dish.objects.get(id=pk)
+class AssignMeDishView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        chef = get_object_or_404(Chef, id=request.user.id)
+        dish = get_object_or_404(Dish, id=pk)
         dish.chefs.add(chef)
+        return redirect(reverse("kitchen:dish-detail", kwargs={"pk": pk}))
 
-    return redirect("kitchen:dish-detail", pk=pk)
 
-
-@login_required
-def delete_me_dish(request, pk):
-    if request.method == "POST":
-        chef = Chef.objects.get(id=request.user.id)
-        dish = Dish.objects.get(id=pk)
+class DeleteMeDishView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        chef = get_object_or_404(Chef, id=request.user.id)
+        dish = get_object_or_404(Dish, id=pk)
         dish.chefs.remove(chef)
-
-    return redirect("kitchen:dish-detail", pk=pk)
+        return redirect(reverse("kitchen:dish-detail", kwargs={"pk": pk}))

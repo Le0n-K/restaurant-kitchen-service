@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 
 from kitchen.models import Dish, DishType
-from accounts.models import Chef
 
 
 class ModelTests(TestCase):
@@ -27,7 +26,7 @@ class ModelTests(TestCase):
         )
         self.assertEqual(
             str(chef),
-            f"{chef.username} ({chef.first_name} {chef.last_name})"
+            f"{chef.username}: ({chef.first_name} {chef.last_name})"
         )
 
     def test_create_chef_with_years_of_experience(self):

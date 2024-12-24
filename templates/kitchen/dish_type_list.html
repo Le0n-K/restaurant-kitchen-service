@@ -6,7 +6,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="h3 mb-0">Dish Types</h1>
-                <a href="{% url 'kitchen:dish_type-create' %}" class="btn btn-primary">
+                <a href="{% url 'kitchen:dish-type-create' %}" class="btn btn-primary">
                     <i class="fas fa-plus me-2"></i>Add New Type
                 </a>
             </div>
@@ -34,17 +34,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for type in dish_type_list %}
+                            {% for dish_type in dish_type_list %}
                                 <tr>
-                                    <td>{{ type.id }}</td>
-                                    <td>{{ type.name }}</td>
-                                    <td>{{ type.dishes.count }}</td>
+                                    <td>{{ dish_type.id }}</td>
+                                    <td>{{ dish_type.name }}</td>
+                                    <td>{{ dish_type.dishes.count }}</td>
                                     <td class="text-end">
                                         <div class="btn-group">
-                                            <a href="{% url 'kitchen:dish_type-update' pk=type.id %}" class="btn btn-sm btn-outline-primary">
+                                            <a href="{% url 'kitchen:dish-type-update' pk=dish_type.id %}" class="btn btn-sm btn-outline-primary">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a href="{% url 'kitchen:dish_type-delete' pk=type.id %}" class="btn btn-sm btn-outline-danger">
+                                            <a href="{% url 'kitchen:dish-type-delete' pk=dish_type.id %}" class="btn btn-sm btn-outline-danger">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </div>

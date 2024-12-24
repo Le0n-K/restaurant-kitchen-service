@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.test import TestCase
 from kitchen.models import DishType
 
-DISH_TYPE_URL = reverse("kitchen:dish_type-list")
+DISH_TYPE_URL = reverse("kitchen:dish-type-list")
 
 
 class PublicDishTypeTest(TestCase):

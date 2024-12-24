@@ -15,11 +15,13 @@ from kitchen.views import (
     ChefCreateView,
     ChefDeleteView,
     ChefUpdateView,
-    index, assign_me_dish, delete_me_dish,
+    IndexView,
+    AssignMeDishView,
+    DeleteMeDishView
 )
 
 urlpatterns = [
-    path("", index, name="index"),
+    path("", IndexView.as_view(), name="index"),
     path(
         "dishes/",
         DishListView.as_view(),
@@ -48,22 +50,22 @@ urlpatterns = [
     path(
         "dish_types/",
         DishTypeListView.as_view(),
-        name="dish_type-list"
+        name="dish-type-list"
     ),
     path(
         "dish_types/create/",
         DishTypeCreateView.as_view(),
-        name="dish_type-create"
+        name="dish-type-create"
     ),
     path(
         "dish_types/<int:pk>/update/",
         DishTypeUpdateView.as_view(),
-        name="dish_type-update"
+        name="dish-type-update"
     ),
     path(
         "dish_types/<int:pk>/delete/",
         DishTypeDeleteView.as_view(),
-        name="dish_type-delete"
+        name="dish-type-delete"
     ),
     path(
         "chefs/",
@@ -91,13 +93,13 @@ urlpatterns = [
         name="chef-update"
     ),
     path(
-        "assign-me-dish/<int:pk>/",
-        assign_me_dish,
+        "dish/<int:pk>/assign/",
+        AssignMeDishView.as_view(),
         name="assign-me-dish"
     ),
     path(
-        "delete-me-dish/<int:pk>/",
-        delete_me_dish,
+        "dish/<int:pk>/delete/",
+        DeleteMeDishView.as_view(),
         name="delete-me-dish"
     )
 ]

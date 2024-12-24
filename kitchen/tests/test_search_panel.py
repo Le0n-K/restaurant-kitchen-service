@@ -21,14 +21,14 @@ class DishTypeListViewTests(TestCase):
         )
 
     def test_search_dish_type_by_name(self):
-        response = self.client.get(reverse("kitchen:dish_type-list"),
+        response = self.client.get(reverse("kitchen:dish-type-list"),
                                    {"name": "Dessert"})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Dessert")
         self.assertNotContains(response, "Alcohol")
 
     def test_empty_search_returns_all(self):
-        response = self.client.get(reverse("kitchen:dish_type-list"),
+        response = self.client.get(reverse("kitchen:dish-type-list"),
                                    {"name": ""})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Dessert")

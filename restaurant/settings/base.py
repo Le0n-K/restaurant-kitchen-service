@@ -21,7 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-6a7c7f_zpos_#6*o@6+02zq+eyi&z6edn7r3hq+ow190_s$1b^")
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-6a7c7f_zpos_#6*o@6+02zq+eyi&z6edn7r3hq+ow190_s$1b^"
+)
 
 
 INTERNAL_IPS = [
@@ -39,13 +42,19 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "restaurant",
     "kitchen",
     "accounts",
-    # "crispy_forms",
-    # "crispy_bootstrap5",
-    # "debug_toolbar",
-    # "nested_forms",
+    "messanger",
+]
+
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 ROOT_URLCONF = "restaurant.urls"
@@ -114,3 +123,11 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.Chef"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "admin.mod@gmail.com"
+EMAIL_HOST_PASSWORD = "zq12xw34"
+DEFAULT_FROM_EMAIL = "admin.mod@gmail.com"
