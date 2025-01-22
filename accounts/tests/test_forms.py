@@ -1,5 +1,6 @@
 from django.test import TestCase
-from accounts.forms import RegisterForm
+
+from accounts.forms import RegisterForm, ChefCreationForm
 
 
 class RegisterFormTest(TestCase):
@@ -25,3 +26,18 @@ class RegisterFormTest(TestCase):
         form = RegisterForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn("password2", form.errors)
+
+
+class ChefCreationFormTest(TestCase):
+    def test_chef_creation_form_is_valid(self):
+        form_data = {
+            "username": "stiven.rou",
+            "password1": "a0s9d8f7",
+            "password2": "a0s9d8f7",
+            "first_name": "Steven",
+            "last_name": "Rouli",
+            "years_of_experience": 7
+        }
+        form = ChefCreationForm(data=form_data)
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data, form_data)

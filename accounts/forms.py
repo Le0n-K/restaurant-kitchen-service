@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.db import transaction
 from django.core.exceptions import ValidationError
 
 from accounts.models import Chef
@@ -49,20 +51,20 @@ class ChefSearchForm(forms.Form):
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    years_of_experience = forms.IntegerField(
-        required=True,
-        min_value=0,
-        help_text="Enter your years of experience as a chef"
-    )
 
-    class Meta(UserCreationForm.Meta):
-        model = Chef
-        fields = UserCreationForm.Meta.fields + ("email", "years_of_experience", "first_name", "last_name")
+    class Meta:
+        model = User
+        fields = ["username", "email", "first_name", "last_name"]
 
     def save(self, commit=True):
-        user = super().save(commit=False)
-        user.email = self.cleaned_data["email"]
-        user.years_of_experience = self.cleaned_data["years_of_experience"]
-        if commit:
-            user.save()
-        return user
+        try:
+            with transaction.atomic():
+                user = super().save(commit=False)
+                user.email = self.cleaned_data["email"]
+                if commit:
+                    user.save()
+                return user
+        except Exception as e:
+            raise forms.ValidationError(
+                f"An error occurred while saving the user: {str(e)}"
+            )

@@ -1,48 +1,33 @@
-from django.contrib.auth import get_user_model
-from django.urls import reverse
 from django.test import TestCase
-from kitchen.models import DishType
-
-DISH_TYPE_URL = reverse("kitchen:dish-type-list")
+from django.urls import reverse
+from django.contrib.auth import get_user_model
 
 
 class PublicDishTypeTest(TestCase):
     def test_login_required(self):
-        res = self.client.get(DISH_TYPE_URL)
+        res = self.client.get(reverse("kitchen:dish-type-list"))
         self.assertNotEqual(res.status_code, 200)
 
 
 class PrivateDishTypeTest(TestCase):
-    def setUp(self) -> None:
-        self.user = get_user_model().objects.create_user(
-            username="user.tu",
-            password="u1s2e3r4"
-        )
+    fixtures = ["dish_types.json", "chefs.json"]
+
+    def setUp(self):
+        self.user = get_user_model().objects.get(username="fin.zevs")
         self.client.force_login(self.user)
 
     def test_retrieve_dish_types(self):
-        DishType.objects.create(name="Fruits")
-        DishType.objects.create(name="Snacks")
-
-        response = self.client.get(DISH_TYPE_URL)
+        response = self.client.get(reverse("kitchen:dish-type-list"))
         self.assertEqual(response.status_code, 200)
-        dish_types = DishType.objects.all()
-        self.assertEqual(
-            list(response.context["dish_type_list"]),
-            list(dish_types),
-        )
-        self.assertTemplateUsed(
-            response,
-            "kitchen/dish_type_list.html"
-        )
+        self.assertEqual(len(response.context["dish_type_list"]), 3)
+        self.assertTemplateUsed(response, "kitchen/dish_type_list.html")
 
 
 class PrivateChefTests(TestCase):
-    def setUp(self) -> None:
-        self.user = get_user_model().objects.create_user(
-            username="user.tu",
-            password="u1s2e3r4"
-        )
+    fixtures = ["chefs.json"]
+
+    def setUp(self):
+        self.user = get_user_model().objects.get(username="fin.zevs")
         self.client.force_login(self.user)
 
     def test_create_chef(self):

@@ -1,0 +1,26 @@
+[
+  {
+    "model": "accounts.chef",
+    "pk": 1,
+    "fields": {
+      "username": "fin.zevs",
+      "first_name": "Finsar",
+      "last_name": "Zevski",
+      "years_of_experience": 2,
+      "password": "pbkdf2_sha256$260000$test_password_hash",
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.chef",
+    "pk": 2,
+    "fields": {
+      "username": "hari.klin",
+      "first_name": "Harry",
+      "last_name": "Xander",
+      "years_of_experience": 12,
+      "password": "pbkdf2_sha256$260000$test_password_hash",
+      "is_active": true
+    }
+  }
+]
