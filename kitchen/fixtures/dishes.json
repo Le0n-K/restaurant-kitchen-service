@@ -1,0 +1,38 @@
+[
+  {
+    "model": "kitchen.dish",
+    "pk": 1,
+    "fields": {
+      "name": "BBQ wings",
+      "dish_type": 3,
+      "price": "10.50"
+    }
+  },
+  {
+    "model": "kitchen.dish",
+    "pk": 2,
+    "fields": {
+      "name": "Duck with berries sauce",
+      "dish_type": 3,
+      "price": "25.00"
+    }
+  },
+  {
+    "model": "kitchen.dish",
+    "pk": 3,
+    "fields": {
+      "name": "Grilled vegetables",
+      "dish_type": 3,
+      "price": "9.70"
+    }
+  },
+  {
+    "model": "kitchen.dish",
+    "pk": 4,
+    "fields": {
+      "name": "Pork steak",
+      "dish_type": 3,
+      "price": "15.00"
+    }
+  }
+]

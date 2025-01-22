@@ -1,9 +1,13 @@
 from django.test import TestCase, Client
 from django.urls import reverse
+from django.contrib.auth import get_user_model
+
 from accounts.models import Chef
 
 
 class AccountViewsTest(TestCase):
+    fixtures = ["chefs.json"]
+
     def setUp(self):
         self.client = Client()
         self.register_url = reverse("accounts:register")
@@ -27,6 +31,8 @@ class AccountViewsTest(TestCase):
         self.assertTrue(Chef.objects.filter(username="testuser").exists())
 
     def test_login_view(self):
-        Chef.objects.create_user(username="testuser", email="testuser@example.com", password="testpassword123")
+        user = get_user_model().objects.get(username="fin.zevs")
+        user.set_password("testpassword123")
+        user.save()
         response = self.client.post(self.login_url, {"username": "testuser", "password": "testpassword123"})
         self.assertEqual(response.status_code, 302)

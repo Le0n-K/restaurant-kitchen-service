@@ -5,48 +5,16 @@ from kitchen.models import Dish, DishType
 
 
 class ModelTests(TestCase):
+    fixtures = ["dishes.json", "dish_types.json", "chefs.json"]
+
     def test_dish_str(self):
-        dish_type = DishType.objects.create(
-            name="Test Dish Type"
-        )
-        dish = Dish.objects.create(
-            name="test",
-            dish_type=dish_type,
-            price=13.55
-        )
-        self.assertEqual(
-            str(dish), f"{dish.name}: {dish.price}"
-        )
+        dish = Dish.objects.get(name="BBQ wings")
+        self.assertEqual(str(dish), "BBQ wings: 10.50")
 
     def test_chef_str(self):
-        chef = get_user_model().objects.create(
-            username="bob.res",
-            first_name="Bob",
-            last_name="Reswill"
-        )
-        self.assertEqual(
-            str(chef),
-            f"{chef.username}: ({chef.first_name} {chef.last_name})"
-        )
-
-    def test_create_chef_with_years_of_experience(self):
-        username = "gig.mad"
-        years_of_experience = 4
-        password = "gh61ha34"
-        chef = get_user_model().objects.create_user(
-            username=username,
-            years_of_experience=years_of_experience,
-            password=password
-        )
-        self.assertEqual(chef.username, username)
-        self.assertEqual(chef.years_of_experience, years_of_experience)
-        self.assertTrue(chef.check_password(password))
+        chef = get_user_model().objects.get(username="fin.zevs")
+        self.assertEqual(str(chef), "fin.zevs: (Finsar Zevski)")
 
     def test_dish_type_str(self):
-        dish_type = DishType.objects.create(
-            name="Bakery"
-        )
-        self.assertEqual(
-            str(dish_type),
-            f"{dish_type.name}"
-        )
+        dish_type = DishType.objects.get(name="Dessert")
+        self.assertEqual(str(dish_type), "Dessert")

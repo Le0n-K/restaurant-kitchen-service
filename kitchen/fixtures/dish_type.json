@@ -1,0 +1,23 @@
+[
+  {
+    "model": "kitchen.dishtype",
+    "pk": 1,
+    "fields": {
+      "name": "Dessert"
+    }
+  },
+  {
+    "model": "kitchen.dishtype",
+    "pk": 2,
+    "fields": {
+      "name": "Alcohol"
+    }
+  },
+  {
+    "model": "kitchen.dishtype",
+    "pk": 3,
+    "fields": {
+      "name": "Grill"
+    }
+  }
+]

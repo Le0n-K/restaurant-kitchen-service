@@ -1,17 +1,23 @@
-# restaurant-kitchen-service
+# Restaurant Kitchen Service
 
 The best service system for the restaurant kitchen
 
-## Access to site
+# Project Setup
 
-login: admin
-password: a1d2m3i4n5
+## Environment Variables
 
+This project uses environment variables for configuration. Make sure to set up the following variables in your `.env` file:
 
-## Check it Out!
+- `SECRET_KEY`: Django secret key
+- `DEBUG`: Set to True for development, False for production
+- `ALLOWED_HOSTS`: Comma-separated list of allowed hosts
 
-[Kitchen Service project deployed to Render](https://restaurant-kitchen-service-ejjg.onrender.com)
-
+Example:
+```shell
+SECRET_KEY=your_secret_key_here
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+```
 
 ## Installations
 
@@ -26,6 +32,18 @@ venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py runserver
 ```
+
+## Access to site
+
+login: admin
+password: a1d2m3i4n5
+
+
+## Check it Out!
+
+[Kitchen Service project deployed to Render](https://restaurant-kitchen-service-ejjg.onrender.com)
+
+
 
 ## Features
 

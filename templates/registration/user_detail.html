@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">{{ object.username }}</h2>
+                    <p class="card-text"><strong>Name:</strong> {{ object.first_name }} {{ object.last_name }}</p>
+                    <p class="card-text"><strong>Email:</strong> {{ object.email }}</p>
+                    <p class="card-text"><strong>Years of Experience:</strong> {{ object.years_of_experience }}</p>
+                    <p class="card-text"><strong>Date Joined:</strong> {{ object.date_joined|date:"F d, Y" }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h3>Messages</h3>
+            <div class="messages-list mb-4">
+                {% for message in messages %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ message.subject }}</h5>
+                            <p class="card-text">{{ message.content }}</p>
+                            <small class="text-muted">Sent on: {{ message.created_at|date:"F d, Y H:i" }}</small>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No messages yet.</p>
+                {% endfor %}
+            </div>
+            <h4>Send a Message</h4>
+            <form method="post" action="{% url 'messanger:send_message' object.pk %}">
+                {% csrf_token %}
+                {{ message_form|crispy }}
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
